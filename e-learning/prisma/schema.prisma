@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl         = env("DIRECT_URL")
+}
+
+enum Roles {
+  client
+  admin
+  mentor
+}
+
+enum ImageLocation {
+  local
+  online
+}
+
+model Image {
+  id                  String          @unique @default(cuid())
+  path                String          @default("")
+  user                User?           @relation("UserImage", fields: [userID], references: [id])
+  userID              String?         @unique 
+  course              Course?         @relation("CourseImage", fields: [courseID], references: [id])
+  courseID            String?         @unique
+  location            ImageLocation    @default(online)
+  createdAt           DateTime        @default(now())
+}
+
+model User {
+  id                  String          @unique @default(cuid())
+  email               String
+  name                String?
+  provider            String          @default("")
+  image               Image?          @relation("UserImage")
+  role                Roles           @default(client)
+  password            String?
+  preferredLanguages  String[]
+  preferredCategories  String[]
+  job                 String?
+  location            String?
+  phone               String? 
+  bio                 String? @db.VarChar(500)
+  courses             SubscribedCourses[]
+  finishedchapters    CompletedChapter[]
+  createdCourses      Course[]
+  answeredQuestions   AnsweredQuestion[]
+  answeredQuizzes     answeredQuiz[]
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
+  @@id([email, provider])
+}
+
+model Course {
+  id                  String  @unique @default(cuid())
+  title               String
+  price               Float 
+  language            String
+  description         String  @db.VarChar(500)
+  category            String
+  difficulty          String
+  image               Image?  @relation("CourseImage")
+  subscribers         SubscribedCourses[]
+  creator             User?    @relation(fields: [creatorID], references: [id])
+  creatorID           String?
+  lessons             Lesson[]
+}
+
+model Lesson {
+  id                  String    @unique @default(cuid())
+  title               String
+  course              Course?   @relation(fields: [courseID], references: [id])
+  courseID            String?
+  chapters            Chapter[]
+  quiz                Quiz?     @relation("LessonQuiz")
+}
+
+model Chapter {
+  id                  String    @unique @default(cuid())
+  title               String
+  videoUrl            String
+  duration            Int
+  score               Float
+  lesson              Lesson?   @relation(fields: [lessonID], references: [id])
+  lessonID            String?
+  completedChapters   CompletedChapter[]
+
+}
+
+model Quiz {
+  id                  String    @unique @default(cuid())
+  title               String
+  lesson              Lesson    @relation("LessonQuiz", fields: [lessonID], references: [id])
+  lessonID            String    @unique
+  questions           Question[]   
+  answeredQuestions   AnsweredQuestion[]
+  answeredQuiz       answeredQuiz?
+}
+
+model Question {
+  id                  String    @unique @default(cuid())
+  content             String
+  quiz                Quiz      @relation(fields: [quizID], references: [id])
+  quizID              String
+  answer              String
+  max_score           Float
+  answeredQuestions   AnsweredQuestion[]
+}
+
+model answeredQuiz {
+  id                  String    @unique @default(cuid())
+  user                User      @relation(fields: [userID], references: [id])
+  userID              String
+  quiz                Quiz      @relation(fields: [quizID], references: [id])
+  quizID              String    @unique
+  answeredQuestions   AnsweredQuestion[]
+  answeredAt          DateTime  @default(now())
+}
+
+model AnsweredQuestion {
+  id                  String    @unique @default(cuid())
+  user                User      @relation(fields: [userID], references: [id])
+  userID              String
+  question           Question   @relation(fields: [questionID], references: [id])
+  quiz                Quiz      @relation(fields: [quizID], references: [id])
+  quizID              String
+  answeredQuiz        answeredQuiz @relation(fields: [answeredquizID], references: [id])
+  answeredquizID      String
+  questionID         String
+  answer             String
+  model_score        Float?
+  answeredAt         DateTime  @default(now())
+}
+
+
+model SubscribedCourses {
+  id                  String             @unique @default(cuid())
+  user                User               @relation(fields: [userid], references: [id])
+  course              Course             @relation(fields: [courseid], references: [id])
+  courseid            String
+  userid              String
+  completedChapters   CompletedChapter[]
+}
+
+model CompletedChapter {
+  id                 String            @unique @default(cuid())
+  subscribedCourse   SubscribedCourses @relation(fields: [subscribedCourseID], references: [id])
+  subscribedCourseID String
+  chapter            Chapter           @relation(fields: [chapterID], references: [id])
+  chapterID          String
+  user                User               @relation(fields: [userid], references: [id])
+  userid              String
+  completedAt        DateTime          @default(now())
+}

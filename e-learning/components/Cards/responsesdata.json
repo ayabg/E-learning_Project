@@ -1,0 +1,122 @@
+[
+    {
+        "title": "Course Title 1",
+        "Lessons": [
+            {
+                "title": "Lesson 1",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "Hello world",
+                        "modelEvaluation": 5
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "What is JavaScript?",
+                        "modelEvaluation": 4
+                    }
+                ]
+            },
+            {
+                "title": "Lesson 2",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "Variables in JS",
+                        "modelEvaluation": 3
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "Functions in JS",
+                        "modelEvaluation": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Course Title 2",
+        "Lessons": [
+            {
+                "title": "Lesson 1",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "Define React components",
+                        "modelEvaluation": 5
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "Props vs state",
+                        "modelEvaluation": 4
+                    }
+                ]
+            },
+            {
+                "title": "Lesson 3",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "Virtual DOM explanation",
+                        "modelEvaluation": 5
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "Why use React?",
+                        "modelEvaluation": 4
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "title": "Course Title 3",
+        "Lessons": [
+            {
+                "title": "Lesson 1",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "What is Python used for?",
+                        "modelEvaluation": 5
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "Basic Python syntax",
+                        "modelEvaluation": 3
+                    }
+                ]
+            },
+            {
+                "title": "Lesson 2",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "Define loops in Python",
+                        "modelEvaluation": 4
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "List comprehensions",
+                        "modelEvaluation": 5
+                    }
+                ]
+            },
+            {
+                "title": "Lesson 3",
+                "Questions": [
+                    {
+                        "title": "Question 1",
+                        "userResponse": "How to handle exceptions",
+                        "modelEvaluation": 5
+                    },
+                    {
+                        "title": "Question 2",
+                        "userResponse": "File handling in Python",
+                        "modelEvaluation": 4
+                    }
+                ]
+            }
+        ]
+    }
+]

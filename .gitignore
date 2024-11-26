@@ -1,0 +1,7 @@
+/e-learning/node_modules/
+/e-learning/public/
+/e-learning/build/
+/e-learning/.env
+/e-learning/.env.local
+/ElearningAgents/.env
+/ElearningAgents/tables/
